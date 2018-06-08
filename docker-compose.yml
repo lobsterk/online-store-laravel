@@ -1,0 +1,61 @@
+version: '2'
+
+### Services
+services:
+### Web Server Container ##################################
+    web:
+        image: lobsterk/docker-nginx-php-fpm7.0
+        container_name: store-web
+        restart: always
+        depends_on:
+           - mysql
+           - redis
+        ports:
+            - "8172:80"
+#        logging:
+#          driver: none
+        volumes:
+           - ./src:/var/www
+           - ./.configs/nginx/default.conf:/etc/nginx/conf.d/default.conf
+           - ./.configs/nginx/nginx.conf:/etc/nginx/nginx.conf
+           - ./.configs/php-fpm/php.ini:/etc/php/7.2/fpm/php.ini
+           - ./.configs/php-fpm/php-fpm.conf:/etc/php/7.2/fpm/php-fpm.conf
+
+## MySQL Container
+    mysql:
+        image: mysql:5.7
+        container_name: store-db
+        restart: always
+        ports:
+            - "3306:3306"
+#        logging:
+#                  driver: none
+        volumes:
+              - ./mysql/:/docker-entrypoint-initdb.d/
+              - ./.configs/mysql/:/etc/mysql/conf.d/
+        environment:
+            MYSQL_DATABASE: storedb
+            MYSQL_USER: buser
+            MYSQL_PASSWORD: 3bcK7V4a
+            MYSQL_ROOT_PASSWORD: qMSwtr3R
+# Adminer container
+    adminer:
+        image: adminer
+        container_name: store-adminer
+        depends_on:
+            - mysql
+        ports:
+            - "8080:8080"
+
+# Redis
+    redis:
+        image: 'bitnami/redis:latest'
+        container_name: store-redis
+        environment:
+          - REDIS_PASSWORD=wUFR2yKL
+        ports:
+          - '6379:6379'
+#        logging:
+#                  driver: none
+#        volumes:
+#          - ./.configs/redis/redis.conf:/opt/bitnami/redis/conf/redis.conf
