@@ -8,5 +8,6 @@
 
 install laravel
 
-`$  docker exec store-web bash -c 'cd /var/www ; composer create-project --prefer-dist laravel/laravel .'`
+`$  docker exec store-web bash -c 'composer create-project --prefer-dist laravel/laravel .'`
 
+`$  docker exec store-web bash -c 'npm run dev`
