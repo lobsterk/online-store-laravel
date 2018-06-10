@@ -4,6 +4,6 @@
 /storage/*.key
 /vendor
 npm-debug.log
-.env
+#.env
 
 package-lock.json
