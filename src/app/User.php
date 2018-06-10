@@ -44,4 +44,9 @@ class User extends Authenticatable
         self::ROLE_MANAGER      => 'Менеджер',
         self::ROLE_CLIENT       => 'Пользователь'
     ];
+
+    public function addresses()
+    {
+        return  $this->hasMany('App\Models\UserAddress');
+    }
 }

@@ -4,7 +4,7 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Models\UserAddress::class, function (Faker $faker) {
     return [
-        'user_id' => $faker->randomDigit,
+        'user_id' => $faker->randomDigitNotNull,
         'region' => $faker->city,
         'city' => $faker->city,
         'address1' => $faker->streetAddress,
