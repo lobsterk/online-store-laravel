@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'surname', 'patronymic'
     ];
 
     /**
@@ -25,5 +25,23 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+    ];
+
+    const STATUS_ACTIVE  = 1;
+    const STATUS_DISABLE = 0;
+
+    const STATUS_LIST = [
+        self::STATUS_ACTIVE     => 'Активен',
+        self::STATUS_DISABLE    => 'Заблокирован'
+    ];
+
+    const ROLE_ADMIN    = 0;
+    const ROLE_MANAGER  = 1;
+    const ROLE_CLIENT   = 2;
+
+    const ROLE_LIST = [
+        self::ROLE_ADMIN        => 'Администратор',
+        self::ROLE_MANAGER      => 'Менеджер',
+        self::ROLE_CLIENT       => 'Пользователь'
     ];
 }
