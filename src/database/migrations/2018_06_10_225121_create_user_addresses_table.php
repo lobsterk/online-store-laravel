@@ -15,7 +15,7 @@ class CreateUserAddressesTable extends Migration
     {
         Schema::create('user_addresses', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned();
             $table->string('region');
             $table->string('city');
             $table->string('address1');
@@ -23,6 +23,14 @@ class CreateUserAddressesTable extends Migration
             $table->string('postcode')->nullable();
             $table->tinyInteger('status');
             $table->timestamps();
+            $table->softDeletes();
+        });
+
+        Schema::table('user_addresses', function (Blueprint $table) {
+            $table->foreign('user_id')
+                ->references('id')->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
         });
     }
 
@@ -33,6 +41,9 @@ class CreateUserAddressesTable extends Migration
      */
     public function down()
     {
+        Schema::table('user_addresses', function (Blueprint $table) {
+            $table->dropForeign('user_addresses_user_id_foreign');
+        });
         Schema::dropIfExists('user_addresses');
     }
 }
