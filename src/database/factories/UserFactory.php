@@ -19,7 +19,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'surname' => $faker->lastName,
         'patronymic' => $faker->firstNameMale,
         'phone' => $faker->phoneNumber,
-        'status' => $faker->boolean,
+        'status' => $faker->boolean(90),
         'role' => $faker->numberBetween(1,2),
         'email' => $faker->unique()->safeEmail,
         'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret

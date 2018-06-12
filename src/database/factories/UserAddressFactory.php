@@ -10,6 +10,6 @@ $factory->define(App\Models\UserAddress::class, function (Faker $faker) {
         'address1' => $faker->streetAddress,
         'address2' => $faker->streetAddress,
         'postcode' => $faker->postcode,
-        'status' => $faker->boolean,
+        'status' => $faker->boolean(90),
     ];
 });
