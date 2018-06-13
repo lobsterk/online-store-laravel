@@ -21,4 +21,9 @@ class Product extends Model
     {
         return $this->belongsTo('App\Models\Manufacturer');
     }
+
+    public function images()
+    {
+        return $this->hasMany('App\Models\ProductImage');
+    }
 }
