@@ -28,7 +28,7 @@ class CreateProductsTable extends Migration
             $table->integer('count');
             $table->boolean('status');
             $table->integer('created_by');
-            $table->integer('updated_by');
+            $table->integer('updated_by')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

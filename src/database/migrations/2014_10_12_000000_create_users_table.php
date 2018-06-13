@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->smallInteger('role');
             $table->string('password');
             $table->rememberToken();
+            $table->dateTime('last_login');
             $table->timestamps();
             $table->softDeletes();
         });
