@@ -27,6 +27,7 @@ class CreateProductsTable extends Migration
             $table->float('price');
             $table->integer('count');
             $table->boolean('status');
+            $table->integer('views')->defaul('0');
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->softDeletes();
