@@ -17,6 +17,7 @@ class CreateProductOptionValuesTable extends Migration
             $table->increments('id');
             $table->integer('product_option_id')->unsigned();
             $table->string('title');
+            $table->string('image');
             $table->integer('sort_order');
             $table->timestamps();
 
