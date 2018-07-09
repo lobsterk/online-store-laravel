@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\UserAddress;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -28,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -49,9 +50,12 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'name'          => 'required|string|max:255',
+            'surname'       => 'required|string|max:255',
+            'patronymic'    => 'string|max:255',
+            'phone'         => 'required|string|max:255',
+            'email'         => 'required|string|email|max:255|unique:users',
+            'password'      => 'required|string|min:6|confirmed',
         ]);
     }
 
@@ -63,11 +67,37 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        dd($data);
-        return User::create([
+        $user = (new  User)->create([
             'name' => $data['name'],
+            'surname' => $data['surname'],
+            'patronymic' => isset($data['patronymic']) ? $data['patronymic'] : '',
+            'phone' => $data['phone'],
             'email' => $data['email'],
+            'status' => User::STATUS_ACTIVE,
+            'role'  => User::ROLE_CLIENT,
+            'last_login' => date('Y-m-d H:i:s'),
             'password' => Hash::make($data['password']),
         ]);
+
+        if (isset($data['addr'])) {
+            Validator::make($data['addr'], [
+                'city'          => 'required|string|max:255',
+                'region'       => 'required|string|max:255',
+                'address1'       => 'required|string|max:255',
+                'postcode'       => 'required|integer|max:255',
+            ]);
+
+            $addr = (new UserAddress)->create([
+                'user_id' => $user->id,
+                'city' => $data['addr']['city'],
+                'region' => $data['addr']['region'],
+                'address1' => $data['addr']['address1'],
+                'postcode' => $data['addr']['postcode'],
+                'status' => UserAddress::STATUS_ACTIVE
+            ]);
+
+        }
+
+        return $user;
     }
 }

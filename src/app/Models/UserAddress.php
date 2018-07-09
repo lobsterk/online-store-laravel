@@ -11,9 +11,7 @@ class UserAddress extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'region', 'city', 'address1', 'address2', 'postcode', 'status'
-    ];
+    protected $guarded = [];
 
     const STATUS_DISABLE = 0;
     const STATUS_ACTIVE  = 1;
