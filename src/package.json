@@ -20,6 +20,6 @@
         "vue": "^2.5.7"
     },
     "dependencies": {
-        "iview": "^2.14.3"
+        "vuetify": "^1.1.4"
     }
 }
