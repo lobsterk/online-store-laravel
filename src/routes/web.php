@@ -17,3 +17,5 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 
 route::view('/admin', 'admin.test');
+
+route::get('admin/clients/', 'Admin\Clients\ClientsController@index')->name('admin.clients');

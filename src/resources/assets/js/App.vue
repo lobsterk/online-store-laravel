@@ -15,7 +15,6 @@
                 >
                     <v-flex text-xs-center>
                         <router-view></router-view>
-                        container
                     </v-flex>
                 </v-layout>
             </v-container>
