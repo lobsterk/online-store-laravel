@@ -1,9 +1,22 @@
 <template>
     <div>
+        <v-card>
+            <v-card-title>
+                {{ table_header}}
+                <v-spacer></v-spacer>
+                <v-text-field
+                        v-model="search"
+                        append-icon="search"
+                        label="Поиск"
+                        single-line
+                        hide-details
+                ></v-text-field>
+            </v-card-title>
+        </v-card>
         <v-data-table
-                :headers="headers"
+                :headers="table_headers"
                 :items="clients"
-                hide-actions
+                :search="search"
                 class="elevation-1"
         >
             <template slot="items" slot-scope="props">
@@ -14,6 +27,9 @@
                 <td class="text-xs-left">{{ props.item.phone }}</td>
                 <td class="text-xs-left">{{ props.item.last_login }}</td>
             </template>
+            <v-alert slot="no-results" :value="true" color="error" icon="warning">
+                По запросу "{{ search }}" ничего не найдено.
+            </v-alert>
         </v-data-table>
     </div>
 </template>
@@ -23,8 +39,10 @@
         name: "List",
         data() {
             return {
-                clients: {},
-                headers: [
+                clients: [],
+                search : '',
+                table_header: "Клиенты",
+                table_headers: [
                     { text: 'Имя', value: 'name' },
                     { text: 'Фамилия', value: 'surname' },
                     { text: 'Отчество', value: 'patronymic' },
