@@ -1,9 +1,10 @@
 <template>
     <div>
-
         <v-card>
             <v-card-title>
-                <a @click="new_record=!new_record" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></a>
+                <v-btn fab dark small color="pink"  @click="new_record=!new_record">
+                    <v-icon dark>add</v-icon>
+                </v-btn>
                 <v-spacer></v-spacer>
                 <v-text-field
                         v-model="search"
@@ -75,6 +76,7 @@
         },
         methods: {
             init() {
+                this.manufacturers = [];
                 axios
                     .get("/admin/manufacturers/")
                     .then(
@@ -85,15 +87,19 @@
             },
             submit () {
                 console.log('Submit form');
-                /*if (this.$refs.form.validate()) {
-                    // Native form submission is not yet supported
-                    axios.post('/api/submit', {
-                        name: this.name,
-                        email: this.email,
-                        select: this.select,
-                        checkbox: this.checkbox
-                    })
-                }*/
+                if (this.$refs.form.validate()) {
+                    axios
+                        .post('/admin/manufacturers', {
+                        title: this.title,
+                        })
+                        .then(
+                            response => (
+                               console.log(response.data)
+                            )
+                        );
+                    this.init();
+                    this.new_record = !this.new_record;
+                }
             },
             clear () {
                 this.$refs.form.reset()

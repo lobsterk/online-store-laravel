@@ -36,7 +36,7 @@ class ManufacturersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response((new Manufacturer)->create(['title' => $request->get('title')]), 200);
     }
 
     /**
