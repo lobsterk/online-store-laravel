@@ -81,6 +81,7 @@ class ManufacturersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return response($id);
+//        return response((new Manufacturer)->find($id)->delete());
     }
 }

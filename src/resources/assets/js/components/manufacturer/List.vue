@@ -1,56 +1,66 @@
 <template>
     <div>
-        <v-card>
-            <v-card-title>
-                <v-btn fab dark small color="pink"  @click="new_record=!new_record">
-                    <v-icon dark>add</v-icon>
-                </v-btn>
-                <v-spacer></v-spacer>
-                <v-text-field
-                        v-model="search"
-                        append-icon="search"
-                        label="Поиск"
-                        single-line
-                        hide-details
-                ></v-text-field>
-            </v-card-title>
-        </v-card>
-
-        <v-data-table
-                :headers="table_headers"
-                :items="manufacturers"
-                :search="search"
-                class="elevation-1"
-                rowsPerPageText="Строк на странице"
-        >
-            <template slot="items" slot-scope="props">
-                <td class="text-xs-left">{{ props.item.title }}</td>
-            </template>
-            <v-alert slot="no-results" :value="true" color="error" icon="warning">
-                По запросу "{{ search }}" ничего не найдено.
-            </v-alert>
-        </v-data-table>
-
-        <v-layout row justify-center>
-            <v-dialog v-model="new_record" persistent max-width="290">
+        <v-toolbar flat color="white">
+            <v-toolbar-title>Manufacturers</v-toolbar-title>
+            <v-divider
+                    class="mx-2"
+                    inset
+                    vertical
+            ></v-divider>
+            <v-spacer></v-spacer>
+            <v-dialog v-model="dialog" max-width="500px">
+                <v-btn slot="activator" color="primary" dark class="mb-2">New Item</v-btn>
                 <v-card>
-                    <v-card-title class="headline">Добавить нового производителя</v-card-title>
-                    <v-card-text>
-                        <v-form ref="form" v-model="valid" lazy-validation>
-                            <v-text-field
-                                    v-model="title"
-                                    label="Производитель"
-                                    required
-                            ></v-text-field>
+                    <v-card-title>
+                        <span class="headline">{{ formTitle }}</span>
+                    </v-card-title>
 
-                            <v-btn @click="submit" > Сохранить </v-btn>
-                            <v-btn @click="new_record=!new_record">Закрыть</v-btn>
-                        </v-form>
+                    <v-card-text>
+                        <v-container grid-list-md>
+                            <v-layout wrap>
+                                <v-flex xs12 sm6 md4>
+                                    <v-text-field v-model="editedItem.title" label="Manufacturer"></v-text-field>
+                                </v-flex>
+                            </v-layout>
+                        </v-container>
                     </v-card-text>
 
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
+                        <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
+                    </v-card-actions>
                 </v-card>
             </v-dialog>
-        </v-layout>
+        </v-toolbar>
+        <v-data-table
+                :headers="headers"
+                :items="manufacturers"
+                hide-actions
+                class="elevation-1"
+        >
+            <template slot="items" slot-scope="props">
+                <td>{{ props.item.title }}</td>
+                <td class="justify-center layout px-0">
+                    <v-icon
+                            small
+                            class="mr-2"
+                            @click="editItem(props.item)"
+                    >
+                        edit
+                    </v-icon>
+                    <v-icon
+                            small
+                            @click="deleteItem(props.item)"
+                    >
+                        delete
+                    </v-icon>
+                </td>
+            </template>
+            <template slot="no-data">
+                <v-btn color="primary" @click="init">Reset</v-btn>
+            </template>
+        </v-data-table>
     </div>
 </template>
 
@@ -61,18 +71,37 @@
             return {
                 search: '',
                 manufacturers: [],
-                table_headers: [
-                    { text: 'Производитель', value: 'title' },
-                ],
+
                 valid: true,
                 title: '',
-                new_record: false
+                new_record: false,
+
+                dialog: false,
+                headers: [
+                    { text: 'Title', value: 'title' },
+                ],
+                desserts: [],
+                editedIndex: -1,
+                editedItem: {
+                    title: '',
+                },
+                defaultItem: {
+                    title: '',
+                }
             }
         },
         created() {
             this.init();
-            console.log('manufacturer');
-
+        },
+        computed: {
+            formTitle () {
+                return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+            }
+        },
+        watch: {
+            dialog (val) {
+                val || this.close()
+            }
         },
         methods: {
             init() {
@@ -85,24 +114,54 @@
                         )
                     );
             },
-            submit () {
+            /*submit() {
                 console.log('Submit form');
                 if (this.$refs.form.validate()) {
                     axios
                         .post('/admin/manufacturers', {
-                        title: this.title,
+                            title: this.title,
                         })
                         .then(
-                            response => (
-                               console.log(response.data)
-                            )
+                            response
                         );
-                    this.init();
+
                     this.new_record = !this.new_record;
                 }
-            },
-            clear () {
+            },*/
+            clear() {
                 this.$refs.form.reset()
+            },
+
+            editItem(item) {
+                this.editedIndex = this.manufacturers.indexOf(item);
+                this.editedItem = Object.assign({}, item);
+                this.dialog = true;
+            },
+
+            deleteItem(item) {
+                const index = this.manufacturers.indexOf(item);
+                if (confirm('Are you sure you want to delete this item?')) {
+                    axios.post(`/admin/manufacturers/${item.id}`, { '_method' : 'DELETE' });
+
+                    this.manufacturers.splice(index, 1);
+                }
+            },
+
+            close() {
+                this.dialog = false;
+                setTimeout(() => {
+                    this.editedItem = Object.assign({}, this.defaultItem);
+                    this.editedIndex = -1;
+                }, 300)
+            },
+
+            save() {
+                if (this.editedIndex > -1) {
+                    Object.assign(this.manufacturers[this.editedIndex], this.editedItem);
+                } else {
+                    this.manufacturers.push(this.editedItem);
+                }
+                this.close();
             }
         }
     }

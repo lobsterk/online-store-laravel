@@ -1,6 +1,5 @@
 <template>
-    <div id="inspire">
-
+    <v-app id="inspire">
         <left-menu v-if="show_menu"> </left-menu>
 
         <v-toolbar color="indigo" dark fixed app>
@@ -13,14 +12,14 @@
         <v-footer color="indigo" app>
             <span class="white--text">&copy; 2018</span>
         </v-footer>
-    </div>
+    </v-app>
 </template>
 
 <script>
     import Menu from './components/menu/Menu.vue'
 
     export default {
-        name: 'VAppMain',
+        name: 'App',
         components: {
             'left-menu'  : Menu,
         },

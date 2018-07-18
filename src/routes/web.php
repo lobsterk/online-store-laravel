@@ -16,7 +16,7 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::middleware(['admin', 'auth'])->namespace('Admin')->group(function () {
+Route::namespace('Admin')->group(function () {
     route::view('/admin', 'admin.main');
     route::resource('/admin/clients/', 'Clients\ClientsController')->only(['index']);
     route::resource('/admin/manufacturers/', 'Manufacturers\ManufacturersController');
