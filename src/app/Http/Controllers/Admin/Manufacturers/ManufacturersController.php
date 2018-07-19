@@ -6,6 +6,10 @@ use App\Models\Manufacturer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+/**
+ * Class ManufacturersController
+ * @package App\Http\Controllers\Admin\Manufacturers
+ */
 class ManufacturersController extends Controller
 {
     /**
@@ -76,12 +80,13 @@ class ManufacturersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Manufacturer $manufacturer
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Manufacturer $manufacturer)
     {
-        return response($id);
-//        return response((new Manufacturer)->find($id)->delete());
+        $manufacturer->delete();
+        return response('true');
     }
 }

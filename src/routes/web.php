@@ -16,8 +16,8 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::namespace('Admin')->group(function () {
-    route::view('/admin', 'admin.main');
-    route::resource('/admin/clients/', 'Clients\ClientsController')->only(['index']);
-    route::resource('/admin/manufacturers/', 'Manufacturers\ManufacturersController');
+Route::namespace('Admin')->prefix('admin')->group(function () {
+    route::view('/', 'admin.main');
+    route::resource('/clients', 'Clients\ClientsController')->only(['index']);
+    route::resource('/manufacturer', 'Manufacturers\ManufacturersController')->only(['index', 'destroy']);
 });

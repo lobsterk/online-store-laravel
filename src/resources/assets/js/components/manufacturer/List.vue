@@ -107,7 +107,7 @@
             init() {
                 this.manufacturers = [];
                 axios
-                    .get("/admin/manufacturers/")
+                    .get("/admin/manufacturer/")
                     .then(
                         response => (
                             this.manufacturers = response.data
@@ -141,7 +141,7 @@
             deleteItem(item) {
                 const index = this.manufacturers.indexOf(item);
                 if (confirm('Are you sure you want to delete this item?')) {
-                    axios.post(`/admin/manufacturers/${item.id}`, { '_method' : 'DELETE' });
+                    axios.post(`/admin/manufacturer/${item.id}`, { '_method' : 'DELETE' });
 
                     this.manufacturers.splice(index, 1);
                 }
