@@ -18,6 +18,6 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::namespace('Admin')->prefix('admin')->group(function () {
     route::view('/', 'admin.main');
-    route::resource('/clients', 'Clients\ClientsController')->only(['index']);
-    route::resource('/manufacturer', 'Manufacturers\ManufacturersController')->only(['index', 'destroy']);
+    route::resource('/client', 'Clients\ClientsController')->only(['index']);
+    route::resource('/manufacturer', 'Manufacturers\ManufacturersController')->except(['show', 'edit']);
 });

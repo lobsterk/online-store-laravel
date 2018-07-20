@@ -22,15 +22,6 @@ class ManufacturersController extends Controller
         return response(Manufacturer::get());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -40,41 +31,21 @@ class ManufacturersController extends Controller
      */
     public function store(Request $request)
     {
-        return response((new Manufacturer)->create(['title' => $request->get('title')]), 200);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return response()->json((new Manufacturer)->create(['title' => $request->get('title')]));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Manufacturer $manufacturer
+     * @return void
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Manufacturer $manufacturer)
     {
-        //
+        $manufacturer->title = $request->get('title');
+
+        return response()->json($manufacturer->save());
     }
 
     /**
@@ -86,7 +57,6 @@ class ManufacturersController extends Controller
      */
     public function destroy(Manufacturer $manufacturer)
     {
-        $manufacturer->delete();
-        return response('true');
+        return response()->json($manufacturer->delete());
     }
 }

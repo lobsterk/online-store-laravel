@@ -59,7 +59,7 @@
         methods: {
             init() {
                 axios
-                .get("/admin/clients/")
+                .get("/admin/client")
                 .then(
                     response => (
                             this.clients = response.data

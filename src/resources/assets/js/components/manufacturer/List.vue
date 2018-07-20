@@ -18,7 +18,7 @@
                     <v-card-text>
                         <v-container grid-list-md>
                             <v-layout wrap>
-                                <v-flex xs12 sm6 md4>
+                                <v-flex xs12 sm12 md12>
                                     <v-text-field v-model="editedItem.title" label="Manufacturer"></v-text-field>
                                 </v-flex>
                             </v-layout>
@@ -141,7 +141,11 @@
             deleteItem(item) {
                 const index = this.manufacturers.indexOf(item);
                 if (confirm('Are you sure you want to delete this item?')) {
-                    axios.post(`/admin/manufacturer/${item.id}`, { '_method' : 'DELETE' });
+                    axios.
+                        delete(`/admin/manufacturer/${item.id}`)
+                        .then(response  => {
+                            console.log(response.data)
+                        });
 
                     this.manufacturers.splice(index, 1);
                 }
@@ -157,8 +161,19 @@
 
             save() {
                 if (this.editedIndex > -1) {
+                    axios
+                        .put(`/admin/manufacturer/${this.editedItem.id}`, {'title' : this.editedItem.title})
+                        .then( response => {
+                            console.log(response.data)
+                        });
+
                     Object.assign(this.manufacturers[this.editedIndex], this.editedItem);
                 } else {
+                    axios
+                        .post(`/admin/manufacturer/`, {'title' : this.editedItem.title})
+                        .then( response => {
+                            console.log(response.data)
+                        });
                     this.manufacturers.push(this.editedItem);
                 }
                 this.close();
