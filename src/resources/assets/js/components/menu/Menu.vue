@@ -8,7 +8,7 @@
                         <v-icon>home</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                        <v-list-tile-title>Главная</v-list-tile-title>
+                        <v-list-tile-title>Home</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
                 <v-list-tile @click="">
@@ -18,7 +18,7 @@
                     <v-list-tile-content>
                         <v-list-tile-title>
                             <router-link to="/clients">
-                                Пользователи
+                                Clients
                             </router-link>
                         </v-list-tile-title>
                     </v-list-tile-content>
@@ -30,7 +30,19 @@
                     <v-list-tile-content>
                         <v-list-tile-title>
                             <router-link to="/manufacturer">
-                                Производители
+                                Manufacturers
+                            </router-link>
+                        </v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile @click="">
+                    <v-list-tile-action>
+                        <v-icon>group_work</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>
+                            <router-link to="/categories">
+                                Categories
                             </router-link>
                         </v-list-tile-title>
                     </v-list-tile-content>

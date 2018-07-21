@@ -37,7 +37,7 @@ class CreateProductImagesTable extends Migration
      */
     public function down()
     {
-        Schema::table('user_addresses', function (Blueprint $table) {
+        Schema::table('product_images', function (Blueprint $table) {
             $table->dropForeign('product_images_product_id_foreign');
         });
         Schema::dropIfExists('product_images');
