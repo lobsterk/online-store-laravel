@@ -20,4 +20,5 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
     route::view('/', 'admin.main');
     route::resource('/client', 'Clients\ClientsController')->only(['index']);
     route::resource('/manufacturer', 'Manufacturers\ManufacturersController')->except(['show', 'edit', 'create']);
+    route::resource('/category', 'Categories\CategoryController')->except(['show', 'edit', 'create']);
 });
