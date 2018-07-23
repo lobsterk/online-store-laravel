@@ -162,7 +162,14 @@
 
             deleteItem(item) {
                 const index = this.categories.indexOf(item)
-                confirm('Are you sure you want to delete this item?') && this.categories.splice(index, 1)
+                if (confirm('Are you sure you want to delete this item?')) {
+                    axios.
+                    delete(`/admin/category/${item.id}`)
+                        .then(response  => {
+                            console.log(response.data)
+                        });
+                    this.categories.splice(index, 1)
+                }
             },
 
             close() {
@@ -175,8 +182,18 @@
 
             save() {
                 if (this.editedIndex > -1) {
+                    axios
+                        .put(`/admin/category/${this.editedItem.id}`, { 'data' : this.editedItem })
+                        .then( response => {
+                            console.log(response.data)
+                        });
                     Object.assign(this.categories[this.editedIndex], this.editedItem)
                 } else {
+                    axios
+                            .post(`/admin/category/`, { 'data' : this.editedItem })
+                            .then( response => {
+                                console.log(response.data)
+                            });
                     this.categories.push(this.editedItem)
                 }
                 this.close()

@@ -114,20 +114,6 @@
                         )
                     );
             },
-            /*submit() {
-                console.log('Submit form');
-                if (this.$refs.form.validate()) {
-                    axios
-                        .post('/admin/manufacturers', {
-                            title: this.title,
-                        })
-                        .then(
-                            response
-                        );
-
-                    this.new_record = !this.new_record;
-                }
-            },*/
             clear() {
                 this.$refs.form.reset()
             },
@@ -143,8 +129,8 @@
                 if (confirm('Are you sure you want to delete this item?')) {
                     axios.
                         delete(`/admin/manufacturer/${item.id}`)
-                        .then(response  => {
-                            console.log(response.data)
+                            .then(response  => {
+                                console.log(response.data)
                         });
 
                     this.manufacturers.splice(index, 1);
