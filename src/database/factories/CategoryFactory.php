@@ -7,7 +7,7 @@ $factory->define(App\Models\Category::class, function (Faker $faker) {
         'title' => $faker->domainWord,
         'parent_id' => $faker->numberBetween(0,3),
         'display_menu' => $faker->boolean(90),
-        'status' => $faker->boolean(90),
+        'status' => $faker->boolean(70),
         'slug' => $faker->slug(3),
     ];
 });

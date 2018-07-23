@@ -23,14 +23,18 @@
                                 </v-flex>
                                 <v-flex xs12 sm6 md6>
                                     <v-select
-                                            :items="[0,1]"
+                                            item-text  = 'name'
+                                            item-value = 'value'
+                                            :items="itemsSelectMenu"
                                             v-model="editedItem.display_menu"
                                             :label="headers[1].text"
                                     ></v-select>
                                 </v-flex>
                                 <v-flex xs12 sm6 md6>
                                     <v-select
-                                            :items="[0,1]"
+                                            item-text  = 'name'
+                                            item-value = 'value'
+                                            :items="itemsSelectStatus"
                                             v-model="editedItem.status"
                                             :label="headers[2].text"
                                     ></v-select>
@@ -58,8 +62,8 @@
         >
             <template slot="items" slot-scope="props">
                 <td>{{ props.item.title }}</td>
-                <td>{{ props.item.display_menu }}</td>
-                <td>{{ props.item.status }}</td>
+                <td>{{ display_menu_str(props.item.display_menu) }}</td>
+                <td>{{ display_status_str(props.item.status) }}</td>
                 <td>{{ props.item.slug }}</td>
                 <td class="justify-center layout px-0">
                     <v-icon
@@ -97,6 +101,8 @@
                 {text: 'Slug', value: 'slug'},
                 {text: 'Actions', value: 'name', sortable: false}
             ],
+            itemsSelectMenu: [{name:'Inactive', value:0},{name:'Active', value:1}],
+            itemsSelectStatus: [{name:'Off', value:0},{name:'On', value:1}],
             editedIndex: -1,
             editedItem: {
                 title: '',
@@ -143,10 +149,10 @@
                     })
             },
             display_menu_str(val) {
-                return val ? this.display_menu_select[0] : this.display_menu_select[1]
+                return val ? this.display_menu_select[1] : this.display_menu_select[0]
             },
             display_status_str(val) {
-                return val ? this.display_status_select[0] : this.display_status_select[1]
+                return val ? this.display_status_select[1] : this.display_status_select[0]
             },
             editItem(item) {
                 this.editedIndex = this.categories.indexOf(item)
