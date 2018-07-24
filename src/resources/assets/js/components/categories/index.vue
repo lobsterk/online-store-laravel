@@ -59,9 +59,11 @@
                 :items="categories"
                 hide-actions
                 class="elevation-1"
+                disable-initial-sort
         >
             <template slot="items" slot-scope="props">
                 <td>{{ props.item.title }}</td>
+                <td>{{ dispaly_parent_str(props.item.parent_id) }}</td>
                 <td>{{ display_menu_str(props.item.display_menu) }}</td>
                 <td>{{ display_status_str(props.item.status) }}</td>
                 <td>{{ props.item.slug }}</td>
@@ -96,6 +98,7 @@
             categories: [],
             headers: [
                 {text: 'Title', value: 'title'},
+                {text: 'Parent', value: 'parent'},
                 {text: 'DisplayMenu', value: 'display_menu'},
                 {text: 'Status', value: 'status'},
                 {text: 'Slug', value: 'slug'},
@@ -145,7 +148,12 @@
                 axios
                     .get('/admin/category')
                     .then(response => {
-                        this.categories = response.data;
+                        for (var i = 0; i < response.data.length; i++) {
+                            this.categories.push(response.data[i]);
+                            for (var j = 0; j < response.data[i].sub_category.length; j++) {
+                                this.categories.push(response.data[i].sub_category[j]);
+                            }
+                        }
                     })
             },
             display_menu_str(val) {
@@ -153,6 +161,13 @@
             },
             display_status_str(val) {
                 return val ? this.display_status_select[1] : this.display_status_select[0]
+            },
+            dispaly_parent_str(id){
+                for (let i=0; i < this.categories.length; i++){
+                    if (this.categories[i].id == id) {
+                        return this.categories[i].title;
+                    }
+                }
             },
             editItem(item) {
                 this.editedIndex = this.categories.indexOf(item)
