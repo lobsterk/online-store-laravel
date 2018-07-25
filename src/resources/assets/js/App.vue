@@ -1,9 +1,15 @@
 <template>
     <v-app id="inspire">
-        <left-menu v-if="show_menu"> </left-menu>
+        <v-navigation-drawer
+                app
+                fixed
+                v-model="show_menu"
+        >
+            <left-menu></left-menu>
+        </v-navigation-drawer>
 
         <v-toolbar color="indigo" dark fixed app>
-            <v-toolbar-side-icon @click="show_menu=!show_menu"></v-toolbar-side-icon>
+            <v-toolbar-side-icon @click.stop="show_menu=!show_menu"></v-toolbar-side-icon>
             <v-toolbar-title>Админ панель online-store-laravel</v-toolbar-title>
         </v-toolbar>
         <v-content>
@@ -25,7 +31,7 @@
         },
         data() {
             return {
-                show_menu: true
+                show_menu: null
             }
         },
         props: {
