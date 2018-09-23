@@ -4,16 +4,32 @@
 
 ### RUN && Install docker containers 
 
-`$ docker-compose up -d`
+####Run docker compose
 
-### run and install online store laravel  
+`docker-compose up -d`
 
-open terminal and cd your path store
+####Go in container
 
+`docker-compose exec web bash`
+
+####Run every command
 ```
-$ docker exec store-web bash -c 'composer install'
-$ docker exec store-web bash -c 'php artisan key:generate'
-$ docker exec store-web bash -c 'cp.env.example .env'
-$ cp src php artisan key:generate
-$ docker exec store-web bash -c '/root/.nvm/versions/node/v10.4.0/bin/npm install'
+# install php vendor
+composer install
+# install js vendor 
+npm install
+npm run prod
+
+#set chmod 
+chmod -R 777 /var/www/storage/logs/
+chmod -R 777 /var/www/storage/framework/views/
+chmod -R 777 /var/www/storage/framework/sessions/
+
+# install db migrate and seed
+php artisan migrate:refresh --seed
+# or 
+php artisan migrate 
+php artisan db:seed
 ```
+
+
