@@ -4,15 +4,15 @@
 
 ### RUN && Install docker containers 
 
-####Run docker compose
+#### Run docker compose
 
 `docker-compose up -d`
 
-####Go in container
+#### Go in container
 
 `docker-compose exec web bash`
 
-####Run every command
+#### Run every command
 ```
 # install php vendor
 composer install
