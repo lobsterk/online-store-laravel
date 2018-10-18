@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 
@@ -22,13 +23,6 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/';
-
-    /**
      * Create a new controller instance.
      *
      * @return void
@@ -44,5 +38,10 @@ class LoginController extends Controller
             'last_login' => date('Y-m-d H:i:s')
         ]);
 
+        if (in_array($user->role, [User::ROLE_ADMIN, User::ROLE_MANAGER])) {
+            return redirect('/admin');
+        } else {
+            redirect('/');
+        }
     }
 }

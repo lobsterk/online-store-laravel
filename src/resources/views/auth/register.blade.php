@@ -104,12 +104,24 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="license" class="col-md-10 offset-1 col-form-label text-md-center">
+                                Нажав кнопку зарегистрироваться,Вы автоматический соглашаетесь с <a href="#">пользовательским соглашением</a> сайта.
+                                {{--
+                                    //TODO Add license
+                                --}}
+                            </label>
+                        </div>
 
                         <div class="row">
                             <label class="col-md-12 col-form-label text-md-center">по желанию можете заполнить сразу адрес для доставки</label>
                         </div>
 
-                        <div class="form-group row">
+                        {{--
+                            //TODO Add choice
+                        --}}
+
+                       {{-- <div class="form-group row">
                             <label for="city" class="col-md-4 col-form-label text-md-right">Город</label>
 
                             <div class="col-md-6">
@@ -163,7 +175,7 @@
                                     </span>
                                 @endif
                             </div>
-                        </div>
+                        </div>--}}
 
 
 

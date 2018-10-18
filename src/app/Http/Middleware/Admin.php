@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\User;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class Admin
@@ -17,7 +17,7 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if (in_array(Auth::user()->role, [User::ROLE_ADMIN, User::ROLE_MANAGER])) {
+        if (!in_array(Auth::user()->role, [User::ROLE_ADMIN, User::ROLE_MANAGER])) {
             return back();
         }
         return $next($request);

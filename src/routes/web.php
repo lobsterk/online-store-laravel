@@ -16,7 +16,7 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::namespace('Admin')->prefix('admin')->group(function () {
+Route::namespace('Admin')->prefix('admin')->middleware('admin')->group(function () {
     route::view('/', 'admin.main');
     route::resource('/client', 'Clients\ClientsController')->only(['index']);
     route::resource('/manufacturer', 'Manufacturers\ManufacturersController')->except(['show', 'edit', 'create']);

@@ -63,7 +63,7 @@
         >
             <template slot="items" slot-scope="props">
                 <td>{{ props.item.title }}</td>
-                <td>{{ dispaly_parent_str(props.item.parent_id) }}</td>
+                <td>{{ display_parent_str(props.item.parent_id) }}</td>
                 <td>{{ display_menu_str(props.item.display_menu) }}</td>
                 <td>{{ display_status_str(props.item.status) }}</td>
                 <td>{{ props.item.slug }}</td>
@@ -97,15 +97,52 @@
             dialog: false,
             categories: [],
             headers: [
-                {text: 'Title', value: 'title'},
-                {text: 'Parent', value: 'parent'},
-                {text: 'DisplayMenu', value: 'display_menu'},
-                {text: 'Status', value: 'status'},
-                {text: 'Slug', value: 'slug'},
-                {text: 'Actions', value: 'name', sortable: false}
+                {
+                    text: 'Title',
+                    value: 'title'
+                },
+                {
+                    text: 'Parent',
+                    value: 'parent'
+                },
+                {
+                    text: 'DisplayMenu',
+                    value: 'display_menu'
+                },
+                {
+                    text: 'Status',
+                    value: 'status'
+                },
+                {
+                    text: 'Slug',
+                    value: 'slug'
+                },
+                {
+                    text: 'Actions',
+                    value: 'name',
+                    sortable: false
+                }
             ],
-            itemsSelectMenu: [{name:'Inactive', value:0},{name:'Active', value:1}],
-            itemsSelectStatus: [{name:'Off', value:0},{name:'On', value:1}],
+            itemsSelectMenu: [
+                {
+                    name:'Inactive',
+                    value:0
+                },
+                {
+                    name:'Active',
+                    value:1
+                }
+            ],
+            itemsSelectStatus: [
+                {
+                    name:'Off',
+                    value:0
+                },
+                {
+                    name:'On',
+                    value:1
+                }
+            ],
             editedIndex: -1,
             editedItem: {
                 title: '',
@@ -162,7 +199,7 @@
             display_status_str(val) {
                 return val ? this.display_status_select[1] : this.display_status_select[0]
             },
-            dispaly_parent_str(id){
+            display_parent_str(id){
                 for (let i=0; i < this.categories.length; i++){
                     if (this.categories[i].id == id) {
                         return this.categories[i].title;
@@ -179,10 +216,10 @@
                 const index = this.categories.indexOf(item)
                 if (confirm('Are you sure you want to delete this item?')) {
                     axios.
-                    delete(`/admin/category/${item.id}`)
-                        .then(response  => {
-                            console.log(response.data)
-                        });
+                        delete(`/admin/category/${item.id}`)
+                            .then(response  => {
+                                console.log(response.data)
+                            });
                     this.categories.splice(index, 1)
                 }
             },

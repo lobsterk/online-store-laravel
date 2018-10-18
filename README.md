@@ -1,6 +1,6 @@
 # online store by laravel
 
-## docker nginx php7.2-fpm mysql redis
+## web stack: docker, docker-compose, nginx, php7.2-fpm, mysql, redis, laravel 5.7, vuejs
 
 ### RUN && Install docker containers 
 
