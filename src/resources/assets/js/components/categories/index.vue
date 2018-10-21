@@ -21,6 +21,15 @@
                                 <v-flex xs12 sm12 md12>
                                     <v-text-field v-model="editedItem.title" label="Title"></v-text-field>
                                 </v-flex>
+                                <v-flex xs12 sm12 md12>
+                                    <v-select
+                                            item-text  = 'title'
+                                            item-value = 'id'
+                                            :items="getCategories(editedItem.id)"
+                                            v-model="editedItem.parent_id"
+                                            label="Parent Category"
+                                    ></v-select>
+                                </v-flex>
                                 <v-flex xs12 sm6 md6>
                                     <v-select
                                             item-text  = 'name'
@@ -146,6 +155,7 @@
             editedIndex: -1,
             editedItem: {
                 title: '',
+                parent_id: 0,
                 display_menu: 0,
                 status: 0,
                 slug: '',
@@ -223,7 +233,18 @@
                     this.categories.splice(index, 1)
                 }
             },
-
+            getCategories(current_id = 0) {
+                let categories = [];
+                console.log(this.categories);
+                for (let i=0; i < this.categories.length; i++){
+                    if (this.categories[i].id == current_id) {
+                        continue;
+                    }
+                    categories.push(this.categories[i]);
+                }
+                console.log(categories);
+                return categories;
+            },
             close() {
                 this.dialog = false
                 setTimeout(() => {

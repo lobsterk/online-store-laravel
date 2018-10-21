@@ -17,9 +17,9 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if (!in_array(Auth::user()->role, [User::ROLE_ADMIN, User::ROLE_MANAGER])) {
-            return back();
+        if (Auth::check() && in_array(Auth::user()->role, [User::ROLE_ADMIN, User::ROLE_MANAGER])) {
+            return $next($request);
         }
-        return $next($request);
+        return redirect('/');
     }
 }
