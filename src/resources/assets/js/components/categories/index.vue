@@ -234,10 +234,10 @@
                 }
             },
             getCategories(current_id = 0) {
-                let categories = [];
+                let categories = [{ id: 0, title: '---------'}];
                 console.log(this.categories);
                 for (let i=0; i < this.categories.length; i++){
-                    if (this.categories[i].id == current_id) {
+                    if (this.categories[i].id == current_id || this.categories[i].parent_id != 0) {
                         continue;
                     }
                     categories.push(this.categories[i]);
