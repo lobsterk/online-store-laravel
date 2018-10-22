@@ -10,7 +10,7 @@
 
         <v-toolbar color="indigo" dark fixed app>
             <v-toolbar-side-icon @click.stop="show_menu=!show_menu"></v-toolbar-side-icon>
-            <v-toolbar-title>Админ панель online-store-laravel</v-toolbar-title>
+            <v-toolbar-title>Administrators online-store-laravel</v-toolbar-title>
         </v-toolbar>
         <v-content>
                <router-view></router-view>

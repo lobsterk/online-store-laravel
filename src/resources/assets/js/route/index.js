@@ -12,5 +12,6 @@ export default new Router({
         { path: '/clients', name: 'clients', text: 'Клиенты', component: Clients , view: true},
         { path: '/manufacturer', name: 'manufacturer', text: 'Производители', component: Manufacturer , view: true},
         { path: '/categories', name: 'categories', text: 'Производители', component: Categories , view: true},
-    ]
+    ],
+    'mode' : 'history'
 })
