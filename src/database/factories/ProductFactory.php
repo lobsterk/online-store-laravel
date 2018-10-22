@@ -15,7 +15,7 @@ $factory->define(App\Models\Product::class, function (Faker $faker) {
         'model'=> $faker->unique()->numberBetween(300000, 500000),
         'price'=> $faker->randomFloat(2, 500, 3000),
         'count'=> $faker->randomDigitNotNull,
-        'status'=> $faker->boolean(90),
+        'views'=> $faker->randomDigitNotNull,
         'status'=> $faker->boolean(90),
         'created_by'=> 1,
     ];
