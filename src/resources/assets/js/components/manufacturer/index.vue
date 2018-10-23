@@ -105,7 +105,6 @@
         },
         methods: {
             init() {
-                this.manufacturers = [];
                 axios
                     .get("/admin/manufacturer/")
                     .then(

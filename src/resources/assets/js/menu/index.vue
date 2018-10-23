@@ -27,6 +27,7 @@
                     { title: 'Clients', icon : 'contact_mail', link: '/clients'},
                     { title: 'Manufacturers', icon : 'accessibility', link: '/manufacturer'},
                     { title: 'Categories', icon : 'group_work', link: '/categories'},
+                    { title: 'Products', icon : 'local_mall', link: '/products'},
                 ]
             }
         }
