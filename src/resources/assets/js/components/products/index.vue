@@ -55,7 +55,7 @@
             <template slot="items" slot-scope="props">
                 <td>{{ props.item.model }}</td>
                 <td>{{ props.item.title }}</td>
-                <td>{{ props.item.category }}</td>
+                <td>{{ getCategoryName(props.item.category_id) }}</td>
                 <td>{{ props.item.manufacturer }}</td>
                 <td>{{ props.item.price }}</td>
                 <td>{{ props.item.count }}</td>
@@ -103,8 +103,8 @@
             editedItem: {
                 model: '',
                 title: 0,
-                category: 0,
-                manufacturer: 0,
+                category_id: 0,
+                manufacturer_id: 0,
                 price: 0,
                 count: 0,
                 views: 0
@@ -112,8 +112,8 @@
             defaultItem: {
                 model: '',
                 title: 0,
-                category: 0,
-                manufacturer: 0,
+                category_id: 0,
+                manufacturer_id: 0,
                 price: 0,
                 count: 0,
                 views: 0
@@ -152,6 +152,21 @@
                             this.manufacturers = response.data
                         )
                 );
+                axios
+                    .get("/admin/category/")
+                    .then(
+                        response => (
+                            this.categories = response.data
+                        )
+                    );
+            },
+
+            getCategoryName(id) {
+                for (let i=0; i < this.categories.length; i++){
+                    if (this.categories[i].id == id) {
+                        return this.categories[i].title;
+                    }
+                }
             },
 
             editItem (item) {
