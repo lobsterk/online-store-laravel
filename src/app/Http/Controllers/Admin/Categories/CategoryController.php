@@ -27,7 +27,6 @@ class CategoryController extends Controller
     {
         return response()->json(
             (new Category)
-                ->where('status', Category::STATUS_ON)
                 ->get()
         );
     }

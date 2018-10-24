@@ -2,6 +2,7 @@
 <template>
     <div>
         <v-toolbar flat color="white">
+
             <v-toolbar-title>Products</v-toolbar-title>
             <v-divider
                     class="mx-2"
@@ -9,43 +10,7 @@
                     vertical
             ></v-divider>
             <v-spacer></v-spacer>
-
-            <v-dialog v-model="dialog" max-width="500px">
-                <v-btn slot="activator" color="primary" dark class="mb-2">New Item</v-btn>
-                <v-card>
-                    <v-card-title>
-                        <span class="headline">{{ formTitle }}</span>
-                    </v-card-title>
-
-                    <v-card-text>
-                        <v-container grid-list-md>
-                            <v-layout wrap>
-                                <v-flex xs12 sm6 md4>
-                                    <v-text-field v-model="editedItem.name" label="Dessert name"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md4>
-                                    <v-text-field v-model="editedItem.calories" label="Calories"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md4>
-                                    <v-text-field v-model="editedItem.fat" label="Fat (g)"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md4>
-                                    <v-text-field v-model="editedItem.carbs" label="Carbs (g)"></v-text-field>
-                                </v-flex>
-                                <v-flex xs12 sm6 md4>
-                                    <v-text-field v-model="editedItem.protein" label="Protein (g)"></v-text-field>
-                                </v-flex>
-                            </v-layout>
-                        </v-container>
-                    </v-card-text>
-
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" flat @click.native="close">Cancel</v-btn>
-                        <v-btn color="blue darken-1" flat @click.native="save">Save</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-dialog>
+            <v-btn color="primary" dark class="mb-2" to='/products/add'>New Item</v-btn>
         </v-toolbar>
         <v-data-table
                 :headers="headers"
@@ -56,8 +21,8 @@
             <template slot="items" slot-scope="props">
                 <td>{{ props.item.model }}</td>
                 <td>{{ props.item.title }}</td>
-                <td><span class="red">{{ getCategoryName(props.item.category_id) }}</span></td>
-                <td><span class="red">{{ getManufacturerName(props.item.manufacturer_id) }}</span></td>
+                <td><span :class="getStatus(props.item.category_id) ? '' : 'red'">{{ getCategoryName(props.item.category_id) }}</span></td>
+                <td>{{ getManufacturerName(props.item.manufacturer_id) }}</td>
                 <td>{{ props.item.price }}</td>
                 <td>{{ props.item.count }}</td>
                 <td>{{ props.item.views }}</td>
@@ -65,7 +30,7 @@
                     <v-icon
                             small
                             class="mr-2"
-                            @click="editItem(props.item)"
+                            @click=""
                     >
                         edit
                     </v-icon>
@@ -87,7 +52,6 @@
 <script>
     export default {
         data: () => ({
-            dialog: false,
             headers: [
                 { text: 'Model', value: 'model', align: 'left' },
                 { text: 'Title', value: 'title', align: 'left' },
@@ -100,37 +64,9 @@
             products: [],
             categories: [],
             manufacturers: [],
-            editedIndex: -1,
-            editedItem: {
-                model: '',
-                title: 0,
-                category_id: 0,
-                manufacturer_id: 0,
-                price: 0,
-                count: 0,
-                views: 0
-            },
-            defaultItem: {
-                model: '',
-                title: 0,
-                category_id: 0,
-                manufacturer_id: 0,
-                price: 0,
-                count: 0,
-                views: 0
-            }
         }),
 
-        computed: {
-            formTitle () {
-                return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
-            }
-        },
-
         watch: {
-            dialog (val) {
-                val || this.close()
-            }
         },
 
         created () {
@@ -176,34 +112,27 @@
                     }
                 }
             },
-
-            editItem (item) {
-                this.editedIndex = this.products.indexOf(item)
-                this.editedItem = Object.assign({}, item)
-                this.dialog = true
+            getStatus(id) {
+                for (let i=0; i < this.categories.length; i++){
+                    if (this.categories[i].id == id) {
+                        return this.categories[i].status;
+                    }
+                }
             },
 
             deleteItem (item) {
-                const index = this.products.indexOf(item)
-                confirm('Are you sure you want to delete this item?') && this.products.splice(index, 1)
-            },
-
-            close () {
-                this.dialog = false
-                setTimeout(() => {
-                    this.editedItem = Object.assign({}, this.defaultItem)
-                    this.editedIndex = -1
-                }, 300)
-            },
-
-            save () {
-                if (this.editedIndex > -1) {
-                    Object.assign(this.products[this.editedIndex], this.editedItem)
-                } else {
-                    this.products.push(this.editedItem)
+                const index = this.products.indexOf(item);
+                if (confirm('Are you sure you want to delete this item?')) {
+                    axios
+                        .delete(`/admin/product/${item.id}`)
+                        .then(response  => {
+                            console.log(response.data)
+                        });
+                    this.products.splice(index, 1);
                 }
-                this.close()
-            }
+
+            },
+
         }
     }
 </script>

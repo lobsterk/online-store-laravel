@@ -1,15 +1,13 @@
 <template>
     <div>
-        <v-list dense v-for="menu in menus" v-bind:key="menu.title">
-            <v-list-tile @click="">
+        <v-list dense>
+            <v-list-tile v-for="menu in menus" v-bind:key="menu.title">
                 <v-list-tile-action>
-                    <v-icon>{{ menu.icon }}</v-icon>
+                    <v-icon v-html="menu.icon"></v-icon>
                 </v-list-tile-action>
                 <v-list-tile-content>
                     <v-list-tile-title>
-                        <router-link :to="menu.link">
-                            {{ menu.title}}
-                        </router-link>
+                        <router-link v-text="menu.title" :to="menu.link"></router-link>
                     </v-list-tile-title>
                 </v-list-tile-content>
             </v-list-tile>
