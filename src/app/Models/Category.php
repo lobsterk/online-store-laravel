@@ -28,4 +28,9 @@ class Category extends Model
     {
         return $this->hasMany('App\Models\Product');
     }
+
+    const STATUS_OFF = 0;
+    const STATUS_ON = 1;
+
+    const PARENT_CATEGORY = 0;
 }

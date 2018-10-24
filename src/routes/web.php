@@ -21,5 +21,6 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin')->group(function 
     route::resource('/client', 'Clients\ClientsController')->only(['index']);
     route::resource('/manufacturer', 'Manufacturers\ManufacturersController')->except(['show', 'edit', 'create']);
     route::resource('/category', 'Categories\CategoryController')->except(['show', 'edit', 'create']);
+    route::get('/category/all', 'Categories\CategoryController@getCategories')->name('category.get_all');
     route::resource('/product', 'Products\ProductController')->except(['show', 'edit', 'create']);
 });

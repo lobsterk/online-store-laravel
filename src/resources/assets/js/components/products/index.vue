@@ -9,6 +9,7 @@
                     vertical
             ></v-divider>
             <v-spacer></v-spacer>
+
             <v-dialog v-model="dialog" max-width="500px">
                 <v-btn slot="activator" color="primary" dark class="mb-2">New Item</v-btn>
                 <v-card>
@@ -55,8 +56,8 @@
             <template slot="items" slot-scope="props">
                 <td>{{ props.item.model }}</td>
                 <td>{{ props.item.title }}</td>
-                <td>{{ getCategoryName(props.item.category_id) }}</td>
-                <td>{{ props.item.manufacturer }}</td>
+                <td><span class="red">{{ getCategoryName(props.item.category_id) }}</span></td>
+                <td><span class="red">{{ getManufacturerName(props.item.manufacturer_id) }}</span></td>
                 <td>{{ props.item.price }}</td>
                 <td>{{ props.item.count }}</td>
                 <td>{{ props.item.views }}</td>
@@ -153,7 +154,7 @@
                         )
                 );
                 axios
-                    .get("/admin/category/")
+                    .get("admin/category/all")
                     .then(
                         response => (
                             this.categories = response.data
@@ -165,6 +166,13 @@
                 for (let i=0; i < this.categories.length; i++){
                     if (this.categories[i].id == id) {
                         return this.categories[i].title;
+                    }
+                }
+            },
+            getManufacturerName(id) {
+                for (let i=0; i < this.manufacturers.length; i++){
+                    if (this.manufacturers[i].id == id) {
+                        return this.manufacturers[i].title;
                     }
                 }
             },

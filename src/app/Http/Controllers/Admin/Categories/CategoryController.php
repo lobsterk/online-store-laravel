@@ -17,8 +17,17 @@ class CategoryController extends Controller
     {
         return response()->json(
             (new Category)
-                ->where('parent_id', 0)
+                ->where('parent_id', Category::PARENT_CATEGORY)
                 ->with('subCategory')
+                ->get()
+        );
+    }
+
+    public function getCategories()
+    {
+        return response()->json(
+            (new Category)
+                ->where('status', Category::STATUS_ON)
                 ->get()
         );
     }
