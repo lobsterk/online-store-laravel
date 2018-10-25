@@ -1,6 +1,6 @@
 import Vue              from 'vue'
 import Router           from 'vue-router'
-import Clients          from '@views/client';
+import Clients          from '../views/client';
 import Manufacturer     from '../views/manufacturer';
 import Categories       from '../views/category';
 import Products         from '../views/product';
