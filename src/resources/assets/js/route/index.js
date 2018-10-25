@@ -1,9 +1,9 @@
 import Vue              from 'vue'
 import Router           from 'vue-router'
-import Clients          from '../components/сlients/';
-import Manufacturer     from '../components/manufacturer/';
-import Categories       from '../components/categories/';
-import Products         from '../components/products/';
+import Clients          from '@views/client';
+import Manufacturer     from '../views/manufacturer';
+import Categories       from '../views/category';
+import Products         from '../views/product';
 
 Vue.use(Router);
 
