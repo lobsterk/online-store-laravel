@@ -1,9 +1,10 @@
-import Vue              from 'vue'
-import Router           from 'vue-router'
-import Clients          from '../views/client';
-import Manufacturer     from '../views/manufacturer';
-import Categories       from '../views/category';
-import Products         from '../views/product';
+import Vue                  from 'vue'
+import Router               from 'vue-router'
+import Clients              from '../views/Client';
+import Manufacturer         from '../views/Manufacturer';
+import Categories           from '../views/Category';
+import Products             from '../views/Product';
+import ProductsStore        from '../views/ProductStore';
 
 Vue.use(Router);
 
@@ -14,5 +15,6 @@ export default new Router({
         { path: '/manufacturer', name: 'manufacturer', text: 'Manufacturer', component: Manufacturer , view: true},
         { path: '/categories', name: 'categories', text: 'Categories', component: Categories , view: true},
         { path: '/products', name: 'products', text: 'Products', component: Products , view: true},
+        { path: '/products/:id', name: 'products', text: 'Products', component: ProductsStore , view: true},
     ]
 })

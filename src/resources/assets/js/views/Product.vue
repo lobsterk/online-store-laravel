@@ -10,7 +10,7 @@
                     vertical
             ></v-divider>
             <v-spacer></v-spacer>
-            <v-btn color="primary" dark class="mb-2" to='/products/add'>New Item</v-btn>
+            <v-btn color="primary" dark class="mb-2" to='/products/0'>New Item</v-btn>
         </v-toolbar>
         <v-data-table
                 :headers="headers"
@@ -30,7 +30,7 @@
                     <v-icon
                             small
                             class="mr-2"
-                            @click=""
+                            to='/products/0'
                     >
                         edit
                     </v-icon>
