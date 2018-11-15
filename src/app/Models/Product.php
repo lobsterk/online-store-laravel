@@ -15,6 +15,14 @@ class Product extends Model
         'price', 'count', 'status', 'created_by'
     ];
 
+    const STATUS_DISABLE = 0;
+    const STATUS_ACTIVE  = 1;
+
+    const STATUS_MESSAGE = [
+        self::STATUS_DISABLE => 'Disable',
+        self::STATUS_ACTIVE  => 'Active',
+    ];
+
     public function category()
     {
         return $this->belongsTo('App\Models\Category');

@@ -22,7 +22,6 @@
                                :counter="10"
                                error-messages=""
                                label="Model"
-                               data-vv-name="model"
                                required
                        ></v-text-field>
                    </v-flex>
@@ -32,7 +31,6 @@
                                :counter="30"
                                error-messages=""
                                label="Title"
-                               data-vv-name="title"
                                required
                        ></v-text-field>
                    </v-flex>
@@ -64,7 +62,6 @@
                             :counter="10"
                             error-messages=""
                             label="html_h1"
-                            data-vv-name="html_h1"
                             required
                     ></v-text-field>
                 </v-flex>
@@ -74,7 +71,6 @@
                             :counter="30"
                             error-messages=""
                             label="html_title"
-                            data-vv-name="html_title"
                             required
                     ></v-text-field>
                 </v-flex>
@@ -85,7 +81,6 @@
                             v-model="product.meta_keywords"
                             error-messages=""
                             label="meta_keywords"
-                            data-vv-name="meta_keywords"
                             required
                     ></v-text-field>
                 </v-flex>
@@ -96,7 +91,6 @@
                             v-model="product.meta_description"
                             error-messages=""
                             label="meta_description"
-                            data-vv-name="meta_description"
                             required
                     ></v-text-field>
                 </v-flex>
@@ -106,9 +100,45 @@
                     <v-textarea
                             label="description"
                             v-model="product.description"
-                            data-vv-name="description"
                             required
                     ></v-textarea>
+                </v-flex>
+            </v-layout>
+            <v-layout>
+                <v-flex xs12 md6>
+                    <v-text-field
+                            v-model="product.price"
+                            error-messages=""
+                            label="Price"
+                            mask="#####"
+                            required
+                    ></v-text-field>
+                </v-flex>
+                <v-flex xs12 md6>
+                    <v-text-field
+                            v-model="product.count"
+                            error-messages=""
+                            label="Count"
+                            disabled
+                    ></v-text-field>
+                </v-flex>
+            </v-layout>
+            <v-layout>
+                <v-flex xs12 md6>
+                    <v-text-field
+                            v-model="product.status"
+                            error-messages=""
+                            label="Status"
+                            required
+                    ></v-text-field>
+                </v-flex>
+                <v-flex xs12 md6>
+                    <v-text-field
+                            v-model="product.views"
+                            error-messages=""
+                            label="Views"
+                            disabled
+                    ></v-text-field>
                 </v-flex>
             </v-layout>
         </form>
@@ -140,7 +170,7 @@
         }),
         computed: {
             titlePage: function() {
-                return this.$route.params.id == 0 ? 'New Item' : 'Item id '+ this.product_id;
+                return this.$route.params.id == 'new' ? 'New Item' : 'Item id '+ this.product_id;
             },
             // isset_item: function()  {
             //   return this.$route.params.id == 0 ? false : true;

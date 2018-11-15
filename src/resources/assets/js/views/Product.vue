@@ -10,7 +10,7 @@
                     vertical
             ></v-divider>
             <v-spacer></v-spacer>
-            <v-btn color="primary" dark class="mb-2" to='/products/0'>New Item</v-btn>
+            <v-btn color="primary" dark class="mb-2" to='/products/new'>New Item</v-btn>
         </v-toolbar>
         <v-data-table
                 :headers="headers"
@@ -21,6 +21,7 @@
             <template slot="items" slot-scope="props">
                 <td>{{ props.item.model }}</td>
                 <td>{{ props.item.title }}</td>
+                <td>{{ props.item.status }}</td>
                 <td><span :class="getStatus(props.item.category_id) ? '' : 'red'">{{ getCategoryName(props.item.category_id) }}</span></td>
                 <td>{{ getManufacturerName(props.item.manufacturer_id) }}</td>
                 <td>{{ props.item.price }}</td>
@@ -55,6 +56,7 @@
             headers: [
                 { text: 'Model', value: 'model', align: 'left' },
                 { text: 'Title', value: 'title', align: 'left' },
+                { text: 'Status', value: 'status', align: 'left' },
                 { text: 'Category', value: 'category' },
                 { text: 'Manufacturer', value: 'manufacturer' },
                 { text: 'Price', value: 'price' },
