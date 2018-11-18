@@ -58,6 +58,43 @@
             <v-layout>
                 <v-flex xs12 md6>
                     <v-text-field
+                            v-model="product.price"
+                            error-messages=""
+                            label="Price"
+                            mask="#####"
+                            required
+                    ></v-text-field>
+                </v-flex>
+                <v-flex xs12 md6>
+                    <v-text-field
+                            v-model="product.count"
+                            error-messages=""
+                            label="Count"
+                            disabled
+                    ></v-text-field>
+                </v-flex>
+            </v-layout>
+            <v-layout>
+                <v-flex xs12 md6>
+                    <v-text-field
+                            v-model="product.status"
+                            error-messages=""
+                            label="Status"
+                            required
+                    ></v-text-field>
+                </v-flex>
+                <v-flex xs12 md6>
+                    <v-text-field
+                            v-model="product.views"
+                            error-messages=""
+                            label="Views"
+                            disabled
+                    ></v-text-field>
+                </v-flex>
+            </v-layout>
+            <v-layout>
+                <v-flex xs12 md6>
+                    <v-text-field
                             v-model="product.html_h1"
                             :counter="10"
                             error-messages=""
@@ -97,50 +134,15 @@
             </v-layout>
             <v-layout>
                 <v-flex md12>
-                    <v-textarea
-                            label="description"
-                            v-model="product.description"
-                            required
-                    ></v-textarea>
+                    <wysiwyg v-model="product.description" />
                 </v-flex>
             </v-layout>
-            <v-layout>
-                <v-flex xs12 md6>
-                    <v-text-field
-                            v-model="product.price"
-                            error-messages=""
-                            label="Price"
-                            mask="#####"
-                            required
-                    ></v-text-field>
-                </v-flex>
-                <v-flex xs12 md6>
-                    <v-text-field
-                            v-model="product.count"
-                            error-messages=""
-                            label="Count"
-                            disabled
-                    ></v-text-field>
-                </v-flex>
-            </v-layout>
-            <v-layout>
-                <v-flex xs12 md6>
-                    <v-text-field
-                            v-model="product.status"
-                            error-messages=""
-                            label="Status"
-                            required
-                    ></v-text-field>
-                </v-flex>
-                <v-flex xs12 md6>
-                    <v-text-field
-                            v-model="product.views"
-                            error-messages=""
-                            label="Views"
-                            disabled
-                    ></v-text-field>
-                </v-flex>
-            </v-layout>
+            <v-btn
+                    :disabled="!valid"
+                    @click="submit"
+            >
+                submit
+            </v-btn>
         </form>
     </v-container>
 </template>
@@ -166,7 +168,9 @@
                 created_by: ''
             },
             manufacturers : [],
-            categories: []
+            categories: [],
+            valid: ''
+
         }),
         computed: {
             titlePage: function() {
@@ -199,6 +203,9 @@
                             this.categories = response.data
                         )
                 );
+            },
+            submit() {
+
             }
         }
 

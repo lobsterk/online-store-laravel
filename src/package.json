@@ -22,6 +22,7 @@
     "dependencies": {
         "materialize-css": "^1.0.0-rc.2",
         "vue-router": "^3.0.1",
+        "vue-wysiwyg": "^1.7.2",
         "vuetify": "^1.1.4"
     }
 }
