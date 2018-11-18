@@ -84,4 +84,9 @@ class ProductController extends Controller
     {
         return response()->json($product->delete());
     }
+
+    public function getProductStatus()
+    {
+        return response()->json(Product::STATUS_MESSAGE);
+    }
 }

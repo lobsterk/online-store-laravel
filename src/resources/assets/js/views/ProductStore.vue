@@ -14,11 +14,12 @@
             </v-flex>
         </v-layout>
 
-        <form>
+        <v-form ref="form" v-model="valid" lazy-validation>
                <v-layout>
                    <v-flex xs12 md6>
                        <v-text-field
                                v-model="product.model"
+                               :rules="[v => !!v || 'Item is required']"
                                :counter="10"
                                error-messages=""
                                label="Model"
@@ -28,6 +29,7 @@
                    <v-flex xs12 md6>
                        <v-text-field
                                v-model="product.title"
+                               :rules="[v => !!v || 'Item is required']"
                                :counter="30"
                                error-messages=""
                                label="Title"
@@ -39,6 +41,7 @@
                 <v-flex xs12 md6>
                     <v-select
                             :items="categories"
+                            :rules="[v => !!v || 'Item is required']"
                             item-text="title"
                             item-value="id"
                             v-model="product.category_id"
@@ -48,6 +51,7 @@
                 <v-flex xs12 md6>
                     <v-select
                             :items="manufacturers"
+                            :rules="[v => !!v || 'Item is required']"
                             item-text="title"
                             item-value="id"
                             v-model="product.manufacturer_id"
@@ -59,6 +63,7 @@
                 <v-flex xs12 md6>
                     <v-text-field
                             v-model="product.price"
+                            :rules="[v => !!v || 'Item is required']"
                             error-messages=""
                             label="Price"
                             mask="#####"
@@ -76,12 +81,13 @@
             </v-layout>
             <v-layout>
                 <v-flex xs12 md6>
-                    <v-text-field
+                    <v-select
+                            :items="productStatus"
                             v-model="product.status"
                             error-messages=""
                             label="Status"
                             required
-                    ></v-text-field>
+                    ></v-select>
                 </v-flex>
                 <v-flex xs12 md6>
                     <v-text-field
@@ -96,6 +102,7 @@
                 <v-flex xs12 md6>
                     <v-text-field
                             v-model="product.html_h1"
+                            :rules="[v => !!v || 'Item is required']"
                             :counter="10"
                             error-messages=""
                             label="html_h1"
@@ -105,6 +112,7 @@
                 <v-flex xs12 md6>
                     <v-text-field
                             v-model="product.html_title"
+                            :rules="[v => !!v || 'Item is required']"
                             :counter="30"
                             error-messages=""
                             label="html_title"
@@ -143,7 +151,7 @@
             >
                 submit
             </v-btn>
-        </form>
+        </v-form>
     </v-container>
 </template>
 
@@ -163,14 +171,15 @@
                 meta_description: '',
                 description: '',
                 price: '',
-                count: '',
-                status: '',
+                count: 0,
+                views: 0,
+                status: 1,
                 created_by: ''
             },
             manufacturers : [],
             categories: [],
-            valid: ''
-
+            valid: true,
+            productStatus: []
         }),
         computed: {
             titlePage: function() {
@@ -203,8 +212,18 @@
                             this.categories = response.data
                         )
                 );
+                axios
+                    .get("admin/product/get/status")
+                    .then(
+                        response => (
+                            this.productStatus = response.data
+                        )
+                    );
             },
             submit() {
+
+            },
+            getProductStatus() {
 
             }
         }

@@ -2,13 +2,25 @@
 <template>
     <div>
         <v-toolbar flat color="white">
-
             <v-toolbar-title>Products</v-toolbar-title>
             <v-divider
                     class="mx-2"
                     inset
                     vertical
             ></v-divider>
+            <v-card>
+                <v-card-title>
+                    {{ table_header}}
+                    <v-spacer></v-spacer>
+                    <v-text-field
+                            v-model="search"
+                            append-icon="search"
+                            label="Поиск"
+                            single-line
+                            hide-details
+                    ></v-text-field>
+                </v-card-title>
+            </v-card>
             <v-spacer></v-spacer>
             <v-btn color="primary" dark class="mb-2" to='/products/new'>New Item</v-btn>
         </v-toolbar>
@@ -17,6 +29,7 @@
                 :items="products"
                 hide-actions
                 class="elevation-1"
+                :search="search"
         >
             <template slot="items" slot-scope="props">
                 <td>{{ props.item.model }}</td>
@@ -66,6 +79,7 @@
             products: [],
             categories: [],
             manufacturers: [],
+            search: ''
         }),
 
         watch: {
