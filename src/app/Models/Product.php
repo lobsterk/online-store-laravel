@@ -12,7 +12,8 @@ class Product extends Model
     protected $fillable = [
         'title', 'html_h1', 'html_title', 'meta_keywords',
         'meta_description', 'description', 'model',
-        'price', 'count', 'status', 'created_by'
+        'category_id', 'manufacturer_id', 'views',
+        'price', 'count', 'status', 'created_by', 'updated_by'
     ];
 
     const STATUS_DISABLE = 0;

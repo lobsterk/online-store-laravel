@@ -83,6 +83,9 @@
                 <v-flex xs12 md6>
                     <v-select
                             :items="productStatus"
+                            item-text="value"
+                            item-value="id"
+                            :rules="[v => !!v || 'Item is required']"
                             v-model="product.status"
                             error-messages=""
                             label="Status"
@@ -183,14 +186,33 @@
         }),
         computed: {
             titlePage: function() {
-                return this.$route.params.id == 'new' ? 'New Item' : 'Item id '+ this.product_id;
+                return this.$route.params.id == 'new' ? 'New Item' : 'Item model '+ this.product.model;
             },
-            // isset_item: function()  {
-            //   return this.$route.params.id == 0 ? false : true;
-            // },
             product_id: function () {
                 return this.$route.params.id;
-
+            }
+        },
+        watch: {
+            'product.model': function(newModel, oldModel) {
+                this.product.title =newModel + ' ' + this.getCategoryName(this.product.category_id);
+                this.product.html_h1 = this.getManufacturerName(this.product.manufacturer_id) + ' ' + newModel + ' ' + this.getCategoryName(this.product.category_id);
+                this.product.html_title = this.getManufacturerName(this.product.manufacturer_id) + ' ' + newModel + ' ' + this.getCategoryName(this.product.category_id);
+                this.product.meta_keywords = this.getManufacturerName(this.product.manufacturer_id)+','+this.getCategoryName(this.product.category_id)+','+newModel;
+                this.product.meta_description = this.getManufacturerName(this.product.manufacturer_id)+' '+this.getCategoryName(this.product.category_id)+' '+newModel;
+            },
+            'product.category_id': function(newId, oldId) {
+                this.product.title =this.product.model + ' ' + this.getCategoryName(newId);
+                this.product.html_h1 = this.getManufacturerName(this.product.manufacturer_id) + ' ' + this.product.model + ' ' + this.getCategoryName(newId);
+                this.product.html_title = this.getManufacturerName(this.product.manufacturer_id) + ' ' + this.product.model + ' ' + this.getCategoryName(newId);
+                this.product.meta_keywords = this.getManufacturerName(this.product.manufacturer_id)+','+this.getCategoryName(newId)+','+this.product.model;
+                this.product.meta_description = this.getManufacturerName(this.product.manufacturer_id)+' '+this.getCategoryName(newId)+' '+this.product.model;
+            },
+            'product.manufacturer_id': function(newId, oldId) {
+                this.product.title =this.product.model + ' ' + this.getCategoryName(this.product.category_id);
+                this.product.html_h1 = this.getManufacturerName(newId) + ' ' + this.product.model + ' ' + this.getCategoryName(this.product.category_id);
+                this.product.html_title = this.getManufacturerName(newId) + ' ' + this.product.model + ' ' + this.getCategoryName(this.product.category_id);
+                this.product.meta_keywords = this.getManufacturerName(newId)+','+this.getCategoryName(this.product.category_id)+','+this.product.model;
+                this.product.meta_description = this.getManufacturerName(newId)+' '+this.getCategoryName(this.product.category_id)+' '+this.product.model;
             }
         },
         created () {
@@ -219,13 +241,46 @@
                             this.productStatus = response.data
                         )
                     );
+                if (this.product_id > 0) {
+                    axios
+                        .get("admin/product/get/item/"+this.product_id)
+                        .then(
+                            response => (
+                                this.product = response.data
+                            )
+                        );
+                }
             },
             submit() {
-
+                if (this.product_id > 0) {
+                    delete this.product.views;
+                    axios
+                        .put(`/admin/product/${this.product_id}`, {'data' : this.product})
+                        .then( response => {
+                            console.log(response.data)
+                        });
+                } else {
+                    axios
+                        .post(`/admin/product/`, {'data' : this.product})
+                        .then( response => {
+                            console.log(response.data)
+                        });
+                }
             },
-            getProductStatus() {
-
-            }
+            getCategoryName(id) {
+                for (let i=0; i < this.categories.length; i++){
+                    if (this.categories[i].id == id) {
+                        return this.categories[i].title;
+                    }
+                }
+            },
+            getManufacturerName(id) {
+                for (let i=0; i < this.manufacturers.length; i++){
+                    if (this.manufacturers[i].id == id) {
+                        return this.manufacturers[i].title;
+                    }
+                }
+            },
         }
 
     }

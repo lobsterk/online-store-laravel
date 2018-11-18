@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Products;
 
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -19,14 +20,16 @@ class ProductController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Return single product item
      *
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getItem($id)
     {
-        //
+        return response()->json((new Product())->find($id));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -36,30 +39,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = (new Product());
+        $product->fill($request->input('data'));
+        $product->created_at = Carbon::now();
+        $product->created_by = \Auth::id();
+        $product->save();
+        return response()->json($request->input('data'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -70,7 +57,13 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = (new Product())->findOrFail($id);
+        $product->fill($request->input('data'));
+
+        $product->updated_at = Carbon::now();
+        $product->updated_by = \Auth::id();
+        $product->save();
+        return response()->json($product);
     }
 
     /**
@@ -87,6 +80,10 @@ class ProductController extends Controller
 
     public function getProductStatus()
     {
-        return response()->json(Product::STATUS_MESSAGE);
+        $items = [];
+        foreach (Product::STATUS_MESSAGE as $k => $i) {
+            $items[$k] = ['id' => $k, 'value' => $i];
+        }
+        return response()->json($items);
     }
 }

@@ -41,13 +41,18 @@
                 <td>{{ props.item.count }}</td>
                 <td>{{ props.item.views }}</td>
                 <td class="justify-center layout px-0">
-                    <v-icon
-                            small
-                            class="mr-2"
-                            to='/products/0'
+                    <v-btn
+                            flat
+                            icon
+                            :to="getUpdateUrl(props.item.id)"
                     >
-                        edit
-                    </v-icon>
+                        <v-icon
+                                small
+                                class="mr-2"
+                        >
+                            edit
+                        </v-icon>
+                    </v-btn>
                     <v-icon
                             small
                             @click="deleteItem(props.item)"
@@ -106,7 +111,7 @@
                         )
                 );
                 axios
-                    .get("admin/category/all")
+                    .get("/admin/category/all")
                     .then(
                         response => (
                             this.categories = response.data
@@ -148,6 +153,9 @@
                 }
 
             },
+            getUpdateUrl(id) {
+                return '/products/'+id;
+            }
 
         }
     }

@@ -24,4 +24,5 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin')->group(function 
     route::get('/category/all', 'Categories\CategoryController@getCategories')->name('category.get_all');
     route::resource('/product', 'Products\ProductController')->except(['show', 'edit', 'create']);
     route::get('product/get/status', 'Products\ProductController@getProductStatus')->name('product.get.status');
+    route::get('product/get/item/{id}', 'Products\ProductController@getItem')->name('product.get.item');
 });
