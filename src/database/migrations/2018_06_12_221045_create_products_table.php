@@ -25,9 +25,9 @@ class CreateProductsTable extends Migration
             $table->string('meta_description');
             $table->string('description');
             $table->float('price');
-            $table->integer('count')->defaul('0');
+            $table->integer('count')->default('0');
             $table->boolean('status');
-            $table->integer('views')->defaul('0');
+            $table->integer('views')->default('0');
             $table->integer('created_by');
             $table->integer('updated_by')->nullable();
             $table->softDeletes();
