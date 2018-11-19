@@ -17,8 +17,6 @@ class CategoryController extends Controller
     {
         return response()->json(
             (new Category)
-                ->where('parent_id', Category::PARENT_CATEGORY)
-                ->with('subCategory')
                 ->get()
         );
     }
